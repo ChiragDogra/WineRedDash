@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details - WineRed Dashboard</title>
+  
+      <!-- Preload critical fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fahkwang:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#921944">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="WineRed Dashboard">
+  
+  <style>
+    :root {
+      --brand-primary: #921944;
+      --brand-primary-light: #b02a56;
+      --brand-primary-dark: #7a1538;
+      --text-primary: #2d3748;
+      --text-secondary: #4a5568;
+      --background: #ffffff;
+      --background-secondary: #f7fafc;
+      --border: #e2e8f0;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      --radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--background-secondary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      width: 100%;
+      background: var(--background);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      animation: slideUp 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-light));
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-family: 'Fahkwang', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 2rem;
+    }
+
+    .product-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-bottom: 2rem;
+    }
+
+    .image-container {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: var(--background-secondary);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .image-container:hover img {
+      transform: scale(1.02);
+    }
+
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(146, 25, 68, 0.1);
+      opacity: 0;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-primary);
+      font-weight: 600;
+    }
+
+    .image-container:hover .image-overlay {
+      opacity: 1;
+    }
+
+    .details-container h2 {
+      font-family: 'Fahkwang', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--brand-primary);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .product-details-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 1rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .product-details-table tr {
+      transition: var(--transition);
+    }
+
+    .product-details-table tr:hover {
+      background: var(--background-secondary);
+    }
+
+    .product-details-table td {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .product-details-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .product-details-table td:first-child {
+      width: 180px;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--background-secondary);
+    }
+
+    .product-details-table td:last-child {
+      color: var(--text-secondary);
+    }
+
+    .product-details-table a {
+      color: var(--brand-primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-block;
+      margin: 0.25rem 0;
+      padding: 0.5rem 1rem;
+      background: rgba(146, 25, 68, 0.1);
+      border-radius: 6px;
+      border: 1px solid transparent;
+    }
+
+    .product-details-table a:hover {
+      background: var(--brand-primary);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-secondary);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border: 4px solid var(--border);
+      border-top: 4px solid var(--brand-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .error {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #e53e3e;
+    }
+
+    .error h2 {
+      font-family: 'Fahkwang', serif;
+      color: #e53e3e;
+      margin-bottom: 1rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--brand-primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .price-highlight {
+      background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-light));
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .container {
+        margin: 0;
+        border-radius: 0;
+      }
+
+      .header {
+        padding: 1.5rem;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+
+      .content {
+        padding: 1.5rem;
+      }
+
+      .product-card {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .product-details-table td:first-child {
+        width: 140px;
+      }
+
+      .product-details-table td {
+        padding: 0.75rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 1.5rem;
+      }
+
+      .content {
+        padding: 1rem;
+      }
+
+      .product-details-table {
+        font-size: 0.9rem;
+      }
+
+      .product-details-table td:first-child {
+        width: 120px;
+      }
+
+      .product-details-table td {
+        padding: 0.5rem 0.75rem;
+      }
+    }
+
+    /* Performance optimizations */
+    .lazy-image {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .lazy-image.loaded {
+      opacity: 1;
+    }
+
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Focus styles for accessibility */
+    .product-details-table a:focus {
+      outline: 2px solid var(--brand-primary);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="container">
+    <div class="header">
+      <h1>Product Details</h1>
+      <p>Comprehensive information about your selected product</p>
+    </div>
+    
+    <div class="content">
+      <div id="productDetails">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          <p>Loading product details...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class ProductDetails {
+      constructor() {
+        this.init();
+      }
+
+      async init() {
+        try {
+          const urlParams = new URLSearchParams(window.location.search);
+          const styleId = urlParams.get('id');
+          
+          if (!styleId) {
+            this.showError('No Style ID provided.');
+            return;
+          }
+
+          await this.fetchDetails(styleId);
+        } catch (error) {
+          console.error('Failed to load product details:', error);
+          this.showError('Failed to load product details. Please try again.');
+        }
+      }
+
+      async fetchDetails(styleId) {
+        try {
+          const response = await fetch(`https://sheetdb.io/api/v1/s19ir31sq3v11/search?ItemID=${encodeURIComponent(styleId)}`);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          const data = await response.json();
+
+          if (data.length > 0) {
+            this.renderProductDetails(data[0]);
+          } else {
+            this.showError(`Product with ID "${styleId}" not found.`);
+          }
+        } catch (error) {
+          console.error('Fetch error:', error);
+          this.showError('Failed to fetch product details. Please check your connection and try again.');
+        }
+      }
+
+      renderProductDetails(item) {
+        const container = document.getElementById('productDetails');
+        
+        // Preload image for better performance
+        const img = new Image();
+        img.src = item.ImageURLs.split(',')[0].trim();
+        
+        img.onload = () => {
+          container.innerHTML = `
+            <div class="product-card">
+              <div class="image-container">
+                <img src="${item.ImageURLs.split(',')[0].trim()}" 
+                     alt="${item.Name}" 
+                     class="lazy-image loaded"
+                     onclick="window.open('${item.ImageURLs.split(',')[0].trim()}', '_blank')">
+                <div class="image-overlay">
+                  Click to view full size
+                </div>
+              </div>
+              
+              <div class="details-container">
+                <h2>${item.Name || 'Product Name'}</h2>
+                
+                <table class="product-details-table">
+                  <tr>
+                    <td>Style ID</td>
+                    <td><strong>${item.ItemID || '-'}</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Style Name</td>
+                    <td>${item.Name || '-'}</td>
+                  </tr>
+                  <tr>
+                    <td>Components</td>
+                    <td>${item.Components || '-'}</td>
+                  </tr>
+                  <tr>
+                    <td>No of Components</td>
+                    <td>${item['No of Components'] || '-'}</td>
+                  </tr>
+                  <tr>
+                    <td>MRP</td>
+                    <td><span class="price-highlight">₹${item.MRP || '-'}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Color</td>
+                    <td>${item.Color || '-'}</td>
+                  </tr>
+                  <tr>
+                    <td>Purchase Links</td>
+                    <td>
+                      ${this.renderPurchaseLinks(item)}
+                    </td>
+                  </tr>
+                </table>
+                
+                <div style="margin-top: 2rem; text-align: center;">
+                  <a href="index.html" class="back-link">← Back to Dashboard</a>
+                </div>
+              </div>
+            </div>
+          `;
+
+          // Add lazy loading for any additional images
+          const lazyImages = container.querySelectorAll('.lazy-image');
+          lazyImages.forEach(img => {
+            if (img.complete) {
+              img.classList.add('loaded');
+            } else {
+              img.addEventListener('load', () => img.classList.add('loaded'));
+            }
+          });
+        };
+
+        img.onerror = () => {
+          // If image fails to load, show product details without image
+          container.innerHTML = `
+            <div class="product-card">
+              <div class="image-container">
+                <div style="display: flex; align-items: center; justify-content: center; height: 300px; background: var(--background-secondary); color: var(--text-secondary);">
+                  <div style="text-align: center;">
+                    <svg width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                      <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                      <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+                    </svg>
+                    <p style="margin-top: 1rem;">Image not available</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="details-container">
+                <h2>${item.Name || 'Product Name'}</h2>
+                
+                <table class="product-details-table">
+                  <tr>
+                    <td>Style ID</td>
+                    <td><strong>${item.ItemID || '-'}</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Style Name</td>
+                    <td>${item.Name || '-'}</td>
+                  </tr>
+                  <tr>
+                    <td>Components</td>
+                    <td>${item.Components || '-'}</td>
+                  </tr>
+                  <tr>
+                    <td>No of Components</td>
+                    <td>${item['No of Components'] || '-'}</td>
+                  </tr>
+                  <tr>
+                    <td>MRP</td>
+                    <td><span class="price-highlight">₹${item.MRP || '-'}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Color</td>
+                    <td>${item.Color || '-'}</td>
+                  </tr>
+                  <tr>
+                    <td>Purchase Links</td>
+                    <td>
+                      ${this.renderPurchaseLinks(item)}
+                    </td>
+                  </tr>
+                </table>
+                
+                <div style="margin-top: 2rem; text-align: center;">
+                  <a href="index.html" class="back-link">← Back to Dashboard</a>
+                </div>
+              </div>
+            </div>
+          `;
+        };
+      }
+
+      renderPurchaseLinks(item) {
+        const links = [
+          { name: 'WineRed', url: item['WineRed.in Link'] },
+          { name: 'Myntra', url: item['Myntra Link'] },
+          { name: 'Amazon', url: item['Amazon Link'] },
+          { name: 'Flipkart', url: item['Flipkart Link'] },
+          { name: 'Ajio', url: item['Ajio Link'] },
+          { name: 'Meesho', url: item['Meesho Link'] }
+        ];
+
+        return links
+          .filter(link => link.url && link.url.trim() !== '')
+          .map(link => `<a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.name}</a>`)
+          .join('');
+      }
+
+      showError(message) {
+        const container = document.getElementById('productDetails');
+        container.innerHTML = `
+          <div class="error">
+            <h2>Error</h2>
+            <p>${message}</p>
+            <a href="index.html" class="back-link">← Back to Dashboard</a>
+          </div>
+        `;
+      }
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      new ProductDetails();
+    });
+
+    // Service Worker for offline support and caching
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => console.log('SW registered'))
+          .catch(error => console.log('SW registration failed'));
+      });
+    }
+  </script>
+</body>
+</html>

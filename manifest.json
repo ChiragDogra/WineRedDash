@@ -1,0 +1,74 @@
+{
+  "name": "WineRed Product Dashboard",
+  "short_name": "WineRed",
+  "description": "A comprehensive product dashboard for WineRed with global semantic search and category browsing",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7fafc",
+  "theme_color": "#921944",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["business", "productivity", "shopping"],
+  "icons": [
+    {
+      "src": "https://dl.dropboxusercontent.com/scl/fi/an7o3dj8b2qo8fezjjm3t/WinRed-Logo.png?rlkey=ou3umjj7oy3hc2y6zhb6std70&st=98mbf2k2&dl=0",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://dl.dropboxusercontent.com/scl/fi/an7o3dj8b2qo8fezjjm3t/WinRed-Logo.png?rlkey=ou3umjj7oy3hc2y6zhb6std70&st=98mbf2k2&dl=0",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Search Products",
+      "short_name": "Search",
+      "description": "Quickly search for products across all categories",
+      "url": "/?search=true",
+      "icons": [
+        {
+          "src": "https://dl.dropboxusercontent.com/scl/fi/an7o3dj8b2qo8fezjjm3t/WinRed-Logo.png?rlkey=ou3umjj7oy3hc2y6zhb6std70&st=98mbf2k2&dl=0",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Browse Categories",
+      "short_name": "Categories",
+      "description": "Browse product categories",
+      "url": "/",
+      "icons": [
+        {
+          "src": "https://dl.dropboxusercontent.com/scl/fi/an7o3dj8b2qo8fezjjm3t/WinRed-Logo.png?rlkey=ou3umjj7oy3hc2y6zhb6std70&st=98mbf2k2&dl=0",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://dl.dropboxusercontent.com/scl/fi/an7o3dj8b2qo8fezjjm3t/WinRed-Logo.png?rlkey=ou3umjj7oy3hc2y6zhb6std70&st=98mbf2k2&dl=0",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "WineRed Dashboard - Wide Screen"
+    },
+    {
+      "src": "https://dl.dropboxusercontent.com/scl/fi/an7o3dj8b2qo8fezjjm3t/WinRed-Logo.png?rlkey=ou3umjj7oy3hc2y6zhb6std70&st=98mbf2k2&dl=0",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "WineRed Dashboard - Mobile"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}
